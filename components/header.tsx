@@ -3,7 +3,7 @@ import Link from "next/link"
 export default function Header() {
   return (
     <div className="bg-accent w-full p-5 relative">
-      <p className="text-3xl inline">Lister</p>
+      <a className="text-3xl inline" href="/">Lister</a>
       <div className="inline absolute right-0">
         <LoginButton text="Login"/>
         <SignupButton text="Sign Up"/>
