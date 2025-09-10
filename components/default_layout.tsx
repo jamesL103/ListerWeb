@@ -26,14 +26,10 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <>
         <Header/>
         {children}
         <Footer/>
-      </body>
-    </html>
+      </>
   );
 }
