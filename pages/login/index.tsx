@@ -20,7 +20,20 @@ function TextField({fieldName, id}) {
 
     return (
         <div className="my-5">
-            <label className="text-xl">{fieldName}<br/><input type="text" id={id} className="bg-accent text-lg w-full rounded-md"></input></label><br/>
+            <label className="text-xl">{fieldName}<br/><input type="text" id={id} required className="bg-accent text-lg w-full rounded-md"></input></label><br/>
         </div>
     )
+}
+
+async function loginAttempt() {
+    const email = document.getElementById("email");
+    const pw = document.getElementById("password");
+    const req = {
+        method: "POST",
+        body: JSON.stringify({
+            
+        })
+    }
+
+    await fetch("/login_request");
 }
