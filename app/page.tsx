@@ -11,7 +11,7 @@ export default function Home() {
       </footer>
     </div>*/
     <div>
-        <p>content</p>
+        <p>home content</p>
     </div>
   );
 }
