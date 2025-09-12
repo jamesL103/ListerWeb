@@ -11,7 +11,7 @@ export default function GenIdDisplay() {
   async function genId() {
     const request = {
       method: "POST",
-      body: JSON.stringify({operation: "create"})
+      body: new URLSearchParams({operation: "create"})
     }
 
     const res = await fetch("/session_manager", request);
