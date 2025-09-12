@@ -1,21 +1,4 @@
-import mysql from 'mysql2';
 import GenIdDisplay from '../components/generate_id_display';
-
-const connection = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  database: "lister",
-})
-
-connection.connect((err) => {
-  if (err){
-    throw err;
-  }
-  console.log("connected to mysql")
-})
-
-
-
 
 export default function Home() {
   
