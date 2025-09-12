@@ -38,18 +38,14 @@ export async function POST(req: NextRequest) {
   return Response.json({}, {status: 500, statusText: "Unrecognized Operation"})
 }
 
-async function createId(): Promise<number> {
-    return new Promise((resolve) => {
-      connection.query("SELECT COUNT(*) AS count FROM sessions", (err, res) => {
-        if(err) {
-            throw err;
-        }
-        const index = res[0].count;
-        const sessionId = crypto.randomInt(999999999999)
-        resolve(sessionId);
-      });
-    })
-    
+async function createId(): Promise<Number> {
+    const [count] = await connection.query("SELECT COUNT(*) AS count FROM sessions");
+    const index = count[0].count;
+    const sessionId = crypto.randomInt(999999999999) + index
+
+    const [result] = await connection.query(`INSERT INTO sessions (session) VALUES(${sessionId})`)
+    console.log(result)
+    return sessionId;
 }
 
 async function appSyncResponse(sessionId: number) {
