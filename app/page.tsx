@@ -1,7 +1,25 @@
-import Image from "next/image";
+import mysql from 'mysql2';
+import GenIdButton from '../components/generate_id_button';
+
+const connection = mysql.createConnection({
+  user: "root",
+  host: "localhost",
+  database: "lister",
+})
+
+connection.connect((err) => {
+  if (err){
+    throw err;
+  }
+  console.log("connected to mysql")
+})
+
+
 
 
 export default function Home() {
+  
+
   return (
     /*<div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -10,8 +28,9 @@ export default function Home() {
         
       </footer>
     </div>*/
+
     <div>
-        <p>home content</p>
-    </div>
+        <GenIdButton/>
+    </div>  
   );
 }
