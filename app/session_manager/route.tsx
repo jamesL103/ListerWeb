@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import mysql from 'mysql2/promise';
 import crypto from "crypto"
+import fs from "fs"
 
 const connection = await mysql.createConnection({
   user: "root",
@@ -19,12 +20,13 @@ export async function POST(req: NextRequest) {
   console.log(data)
 
   const body = Object.fromEntries(data.entries());
+  console.log(`Received request with body: \n ${JSON.stringify(body)}`)
 
   if (body.operation == "create"){
     const id = await createId();
     console.log(`Creating id ${id}`)
     return Response.json({id}, {status: 200, statusText: "OK"})
-  } else if (body.operation == "connect") {
+  } else if (body.operation == "getData") {
 
     if (!body.hasOwnProperty("id")) {
       return Response.json({}, {status:400, statusText:"Bad Request"})
@@ -33,6 +35,15 @@ export async function POST(req: NextRequest) {
     const id = Number(body.id);
 
     return appSyncResponse(id)
+  } else if (body.operation == "sendData") {
+    if (!body.hasOwnProperty("list") || !body.hasOwnProperty("id")) {
+      return Response.json({}, {status:400, statusText:"Bad Request"})
+    }
+
+    //i'm not validating the list file they're sending right now, this is a terrible system that
+    //needs to be fixed 
+    const {list, id} = body;
+    appSendSync(Number(id), list)
   }
   
   return Response.json({}, {status: 500, statusText: "Unrecognized Operation"})
@@ -49,6 +60,7 @@ async function createId(): Promise<Number> {
 }
 
 async function appSyncResponse(sessionId: number) {
+  //retrieve byte buffer representing file
   const [entry] = await connection.query(`SELECT list FROM sessions WHERE session = ${sessionId} LIMIT 1`);
   console.log(`Retrieving list from session ${sessionId}`)
   if (entry.length == 0) {
@@ -56,5 +68,13 @@ async function appSyncResponse(sessionId: number) {
     return Response.json({}, {status:400, statusText:"Invalid session id"})
   }
   console.log(`Sending list to session ${sessionId}`)
+  console.log(entry[0].list)
   return Response.json(entry[0])
+}
+
+async function appSendSync(sessionId: number, buffer) {
+  console.log(`Updating session ${sessionId} list`)
+  const [result] = await connection.query(`UPDATE sessions SET list = ${buffer} WHERE session = ${sessionId} LIMIT 1`)
+  console.log(result)
+  return Response.json({})
 }
