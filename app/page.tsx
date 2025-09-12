@@ -1,5 +1,5 @@
 import mysql from 'mysql2';
-import GenIdButton from '../components/generate_id_button';
+import GenIdDisplay from '../components/generate_id_display';
 
 const connection = mysql.createConnection({
   user: "root",
@@ -30,7 +30,7 @@ export default function Home() {
     </div>*/
 
     <div>
-        <GenIdButton/>
+        <GenIdDisplay/>
     </div>  
   );
 }

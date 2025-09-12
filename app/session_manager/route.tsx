@@ -18,23 +18,27 @@ connection.connect((err) => {
 
 export async function POST(req: NextRequest) {
 
-    const {operation} = req.json();
+    const {operation}:{operation:string} = await req.json();
 
     if (operation == "create"){
-
+      const id = await createId();
+      console.log(`Creating id ${id}`)
+      return Response.json({id}, {status: 200, statusText: "OK"})
     }
     
-    const index = connection.query('')
-    
-    return Response.json({}, {status: 200, statusText: "OK"})
+    return Response.json({}, {status: 500, statusText: "Server Error"})
 }
 
-async function createId() {
-    connection.query("SELECT COUNT(*) FROM sessions", (err, res) => {
+async function createId(): Promise<number> {
+    return new Promise((resolve) => {
+      connection.query("SELECT COUNT(*) FROM sessions", (err, res) => {
         if(err) {
             throw err;
         }
         console.log(res)
         const sessionId = crypto.randomInt(999999999999)
-    )
+        resolve(sessionId);
+      });
+    })
+    
 }
