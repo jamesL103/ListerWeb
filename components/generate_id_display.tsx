@@ -1,5 +1,8 @@
 'use client'
 import {useState} from "react";
+import "../app/globals.css"
+
+const id_msg = "This ID is required to synchronize your Lister App data. Store it somewhere secure:\n";
 
 export default function GenIdDisplay() {
 
@@ -23,8 +26,8 @@ export default function GenIdDisplay() {
 
   return (
     <div>
-      <button type="button" onClick={genId}>Generate User ID</button>
-      <div>{id == -1 ? "failed to generate id" : id}</div>
+      <button type="button" onClick={genId} className="border-2 rounded-md bg-mint">Generate User ID</button>
+      <div>{id == -1 ? "failed to generate id" : id_msg + id}</div>
     </div>
   )
 }
