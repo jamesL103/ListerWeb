@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import mysql from 'mysql2/promise';
 import crypto from "crypto"
-import fs from "fs"
+
 
 const connection = await mysql.createConnection({
   user: "root",
@@ -61,14 +61,14 @@ async function createId(): Promise<Number> {
 
 async function appSyncResponse(sessionId: number) {
   //retrieve byte buffer representing file
-  const [entry] = await connection.query(`SELECT list FROM sessions WHERE session = ${sessionId} LIMIT 1`);
+  const [entry] = await connection.query(`SELECT list, complete FROM sessions WHERE session = ${sessionId} LIMIT 1`);
   console.log(`Retrieving list from session ${sessionId}`)
   if (entry.length == 0) {
     console.log(`No list found for session ${sessionId}`)
     return Response.json({}, {status:400, statusText:"Invalid session id"})
   }
   console.log(`Sending list to session ${sessionId}`)
-  console.log(entry[0].list)
+  console.log(entry[0])
   return Response.json(entry[0])
 }
 
