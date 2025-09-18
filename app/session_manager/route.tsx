@@ -2,12 +2,13 @@ import type { NextRequest } from "next/server";
 import mysql from 'mysql2/promise';
 import crypto from "crypto";
 import {Buffer} from "node:buffer";
+import "dotenv/config"
 
 
 const connection = await mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  database: "lister",
+  user: process.env.MYSQL_USER,
+  host: process.env.MYSQL_HOST,
+  database: process.env.MYSQL_DB,
 })
 
 const NO_LIST_FOUND = 201;
