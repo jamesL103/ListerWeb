@@ -57,7 +57,7 @@ async function jsonRequest(req: NextRequest) {
       if (!body.hasOwnProperty("todo") || !body.hasOwnProperty("id") || !body.hasOwnProperty("resolved")) {
           return Response.json({message: "Missing property"}, {status:400, statusText:"Bad Request"})
       }
-      const {id, todo, resolved} = body;
+      const {id} = body;
       //i'm not validating the list file they're sending right now, this is a terrible system that
       //needs to be fixed
       console.log(`Received request data: ${body}`);
