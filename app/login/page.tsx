@@ -24,17 +24,3 @@ function TextField({fieldName, id, type = "text"}) {
         </div>
     )
 }
-
-async function loginAttempt() {
-    const email = document.getElementById("email");
-    const pw = document.getElementById("password");
-    const req = {
-        method: "POST",
-        body: JSON.stringify({
-            email: email,
-            password: pw
-        })
-    }
-
-    await fetch("/login_request", req);
-}
