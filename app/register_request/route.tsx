@@ -2,8 +2,8 @@ import { NextRequest } from "next/server";
 import crypto from "crypto"
 import mysql from "mysql2/promise"
 import "dotenv/config"
+import status from "../register/status.jsx"
 
-console.log(process.env.MYSQL_USER)
 const connection = await mysql.createConnection({
     user: process.env.MYSQL_USER,
     host: process.env.MYSQL_HOST,
@@ -15,7 +15,14 @@ console.log("Connected to MySQL")
 
 
 export async function POST(req: NextRequest) {
+    /*const reader = req.body?.getReader()
+    const result = await reader?.read()
+    let message = ""
+    for (const b of result.value) {
+        message += String.fromCharCode(b)
+    }*/
     const data = await req.formData();
+    console.log(data)
     const body = Object.fromEntries(data.entries())
     console.log(`received register request ${JSON.stringify(body)}`)
     if (!body.hasOwnProperty("email") || !body.hasOwnProperty("password")) {
@@ -32,7 +39,8 @@ export async function POST(req: NextRequest) {
     console.log(res)
     //register new user
     if (count != 0) {
-        return Response.json({message: "email already in use"}, {status: 400})
+        return Response.json({message: "email already in use", error: status.EMAIL_USED_ERROR}, {status: 400})
     }
     
+    return Response.json({message: "good"}, {status: 200})
 }
