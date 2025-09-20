@@ -1,0 +1,5 @@
+const GOOD = 0;
+ const EMAIL_USED_ERROR = 1;
+const PASSWORD_MATCH_ERROR = 2;
+
+export default {GOOD, EMAIL_USED_ERROR, PASSWORD_MATCH_ERROR};
