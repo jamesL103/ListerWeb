@@ -1,11 +1,12 @@
 "use client";
 import { useActionState , useState} from "react"
-import crypto from "crypto"
 import status from "./status.jsx"
+import {signup} from "../actions/signup.jsx"
+import { redirect, RedirectType } from "next/navigation";
 
 export default function Register() {
     
-    const [state, formAction, isPending] = useActionState(validate, status.GOOD)
+    const [state, formAction, isPending] = useActionState(signup, status.GOOD)
     const [email, setEmail] = useState("")
 
     return (
@@ -45,35 +46,3 @@ function SecretField({fieldName, id, name, outline}) {
         </div>
     )
 }
-
-async function validate(previousState, formData) {
-    const data = Object.fromEntries(formData.entries())
-    console.log(data)
-
-    //validate data here
-    if (data.password !== data.confirmPassword) {
-        return status.PASSWORD_MATCH_ERROR
-    }
-
-    const hash = crypto.createHash("sha256")
-    hash.update(password)
-    formData.set("password", hash.digest())
-    formData.delete("confirmPassword")
-
-    const req = {
-        method: "POST",
-        body: formData
-    }
-
-    const res = await fetch("/register_request", req)
-    console.log(res)
-    const resBody = await res.json();
-    
-
-    if (resBody?.error == status.EMAIL_USED_ERROR) {
-        return status.EMAIL_USED_ERROR
-    }
-    
-    return status.GOOD;
-}
-
