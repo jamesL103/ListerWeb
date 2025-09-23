@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import crypto from "crypto"
 import mysql from "mysql2/promise"
+import bcrypt from "bcrypt";
 import "dotenv/config"
 import status from "../register/status.jsx"
 
@@ -30,9 +30,6 @@ export async function POST(req: NextRequest) {
     }
     let {email, password} = body;
     email = String(email).toLowerCase();
-    const pwHash = crypto.createHash('sha256');
-    pwHash.update(String(password))
-
     // check if email already registered
     const [res] = await connection.query("SELECT COUNT(email) AS count FROM users WHERE email = ?", [email])
     const count = res[0].count;
@@ -41,6 +38,11 @@ export async function POST(req: NextRequest) {
     if (count != 0) {
         return Response.json({message: "email already in use", error: status.EMAIL_USED_ERROR}, {status: 400})
     }
-    
+
+
+    // hash password
+    const hash = await bcrypt.hash(password, 10);
+
+    console.log("pretend we added the login data here")
     return Response.json({message: "good"}, {status: 200})
 }
