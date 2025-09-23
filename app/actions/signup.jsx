@@ -1,5 +1,4 @@
 import status from "../register/status"
-import * as crypto from "crypto"
 import {redirect, RedirectType} from "next/navigation"
 // const {scryptSync} =  await import("node:crypto")
 
@@ -11,11 +10,6 @@ export async function signup(previousState, formData) {
     if (data.password !== data.confirmPassword) {
         return status.PASSWORD_MATCH_ERROR
     }
-
-    console.log(crypto)
-    crypto.createHash('sha256')
-    const hash = crypto.scryptSync(password, process.env.PASSWORD_SALT, 64)
-    formData.set("password", hash)
 
     const req = {
         method: "POST",
