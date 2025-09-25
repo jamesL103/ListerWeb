@@ -42,7 +42,14 @@ export async function POST(req: NextRequest) {
 
     // hash password
     const hash = await bcrypt.hash(password, 10);
+    const query = `INSERT INTO users (email, hash) VALUES (?, ?)`
 
-    console.log("pretend we added the login data here")
-    return Response.json({message: "good"}, {status: 200})
+    const sqlRes = await connection.query(query, [email, hash]);
+    console.log(JSON.stringify(sqlRes))
+
+    if (sqlRes[0].affectedRows < 1) {
+        return Response.json({message: "Couldn't register user"}, {status: 501})
+    }
+
+    return Response.json({message: "good"})
 }
