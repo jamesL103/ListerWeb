@@ -2,7 +2,7 @@
 import { useActionState , useState} from "react"
 import status from "./status.jsx"
 import {signup} from "../actions/signup.jsx"
-import { redirect, RedirectType } from "next/navigation";
+import SecretField from "@/components/secret_field.jsx";
 
 export default function Register() {
     
@@ -33,15 +33,6 @@ function TextField({fieldName, id, type = "text", name, value, setter}) {
     return (
         <div className="my-5">
             <label className="text-xl">{fieldName}<br/><input type={type} id={id} name={name} required value={value} onChange={(e) => setter(e.target.value)} className="bg-accent text-lg w-full rounded-md"></input></label><br/>
-        </div>
-    )
-}
-
-function SecretField({fieldName, id, name, outline}) {
-    const className = `bg-accent text-lg w-full rounded-md outline-${outline} outline focus:outline-none`
-    return (
-        <div className="my-5">
-            <label className="text-xl">{fieldName}<br/><input type="password" id={id} name={name} required minLength="8" maxLength="20" className={className}></input></label><br/>
         </div>
     )
 }
