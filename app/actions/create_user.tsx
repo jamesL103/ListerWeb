@@ -12,23 +12,14 @@ const connection = await mysql.createConnection({
 
 console.log("Connected to MySQL")
 
+export type userCreateResult = {
+    status: number,
+    message: string
+}
 
-
-export async function POST(req: NextRequest) {
-    /*const reader = req.body?.getReader()
-    const result = await reader?.read()
-    let message = ""
-    for (const b of result.value) {
-        message += String.fromCharCode(b)
-    }*/
-    const data = await req.formData();
-    console.log(data)
-    const body = Object.fromEntries(data.entries())
-    console.log(`received register request ${JSON.stringify(body)}`)
-    if (!body.hasOwnProperty("email") || !body.hasOwnProperty("password")) {
-        return Response.json({message: "invalid request"}, {status: 400})
-    }
-    let {email, password} = body;
+export async function createUser(data: {email:string, password:string}) : Promise<userCreateResult> { 
+    console.log(`received register request ${JSON.stringify(data)}`)
+    let {email, password} = data;
     email = String(email).toLowerCase();
     // check if email already registered
     const [res] = await connection.query("SELECT COUNT(email) AS count FROM users WHERE email = ?", [email])
@@ -36,9 +27,8 @@ export async function POST(req: NextRequest) {
     console.log(res)
     //register new user
     if (count != 0) {
-        return Response.json({message: "email already in use", error: status.EMAIL_USED_ERROR}, {status: 400})
+        return {status: status.EMAIL_USED_ERROR, message: "email already in use"}
     }
-
 
     // hash password
     const hash = await bcrypt.hash(password, 10);
@@ -48,8 +38,8 @@ export async function POST(req: NextRequest) {
     console.log(JSON.stringify(sqlRes))
 
     if (sqlRes[0].affectedRows < 1) {
-        return Response.json({message: "Couldn't register user"}, {status: 501})
+        return {status: 1, message: "Couldn't register user"}
     }
 
-    return Response.json({message: "good"})
+    return {status: status.GOOD, message: "success"}
 }

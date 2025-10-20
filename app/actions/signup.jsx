@@ -1,27 +1,25 @@
+"use server"
 import status from "../register/status"
 import {redirect, RedirectType} from "next/navigation"
-// const {scryptSync} =  await import("node:crypto")
+import { createUser } from "./create_user"
 
 export async function signup(previousState, formData) {
     const data = Object.fromEntries(formData.entries())
-    console.log(data)
+    console.log(`Received form data: ${JSON.stringify(data)}`)
 
     //validate data here
     if (data.password !== data.confirmPassword) {
         return status.PASSWORD_MATCH_ERROR
     }
+    const {email, password} = data
+    const res = await createUser({email, password})
 
-    const req = {
-        method: "POST",
-        body: formData
-    }
-
-    const res = await fetch("/register_request", req)
     console.log(res)
-    const resBody = await res.json();
-    console.log(resBody)
-    if (resBody?.error == status.EMAIL_USED_ERROR) {
+
+    if (res?.status == status.EMAIL_USED_ERROR) {
         return status.EMAIL_USED_ERROR
     }
+
+
     redirect("/register/confirm", RedirectType.replace)
 }
