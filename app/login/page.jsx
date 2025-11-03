@@ -2,7 +2,8 @@
 import { useActionState, useState} from "react"
 import "../globals.css"
 import "../../components/secret_field"
-import SecretField from "../../components/secret_field";
+import SecretField from "../../components/secret_field"
+import login from "@/app/actions/login"
 
 
 const LOGIN_SUCCESS = 0
@@ -39,20 +40,4 @@ function TextField({fieldName, id, type = "text", value="", setter}) {
             <label className="text-xl">{fieldName}<br/><input type={type} id={id} name={id} value={value} onChange={(e) => setter(e.target.value)} required className="bg-accent text-lg w-full rounded-md"></input></label><br/>
         </div>
     )
-}
-
-async function login(currentState, formData) {
-    console.log("logging in");
-    const req = {
-        method: "POST",
-        body: formData
-    }
-
-    const res = await fetch("/login_request", req);
-    const body = await res.json()
-    if (body.auth == LOGIN_FAILED) {
-        return LOGIN_FAILED
-    } else {
-        return LOGIN_SUCCESS
-    }
 }
