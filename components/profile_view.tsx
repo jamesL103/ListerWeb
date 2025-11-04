@@ -1,5 +1,6 @@
 import Link from "next/link"
 import {getSession} from "@/app/actions/get_session"
+import logout from "@/app/actions/logout"
 
 
 const div_pos = "inline absolute right-0"
@@ -41,6 +42,6 @@ function SignupButton({text} : {text: string}) {
 
 function LogoutButton() {
     return (
-        <button>Logout</button>
+        <button className="bg-cyan-600 rounded-sm px-4 py-2 hover:bg-cyan-700 active:bg-cyan-800 ml-10 mr-5" onClick={logout}>Logout</button>
     )
 }

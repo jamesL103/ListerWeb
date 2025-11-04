@@ -6,7 +6,7 @@ import {cookies} from "next/headers"
 export async function getSession() : Promise<IronSession<SessionData>> {
     const session = await getIronSession<SessionData>(await cookies(), sessionOptions)
 
-    if (!session.isLoggedIn) { //todo: why does the example compare it directly to true
+    if (!session.isLoggedIn) { 
         session.isLoggedIn = DefaultSession.isLoggedIn
         session.email = DefaultSession.email
     } 
