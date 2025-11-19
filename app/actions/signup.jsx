@@ -2,6 +2,7 @@
 import status from "../register/status"
 import {redirect, RedirectType} from "next/navigation"
 import { createUser } from "./create_user"
+import { getSession } from "./get_session"
 
 export async function signup(previousState, formData) {
     const data = Object.fromEntries(formData.entries())
@@ -20,6 +21,12 @@ export async function signup(previousState, formData) {
         return status.EMAIL_USED_ERROR
     }
 
+    //user successfully created
 
-    redirect("/register/confirm", RedirectType.replace)
+    const session = await getSession()
+    session.email = email
+    session.isLoggedIn = true
+    await session.save()
+
+    redirect("/", RedirectType.replace)
 }
