@@ -9,9 +9,12 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-text-hover: var(--text-hover);
   --color-accent: var(--bg-accent);
   --color-grape: var(--purple-theme);
+  --color-dark-grape: var(--dark-purple);
   --color-mint: var(--green-theme);
+  --color-berry: var(--blue-theme);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -20,9 +23,12 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --text-hover: #5c5c5c;
     --bg-accent: #313131;
     --purple-theme: #33293C;
-    --green-them: #1ED27D;
+    --dark-purple: #211b27;
+    --green-theme: #0FA44B;
+    --blue-theme: #5D8ED7;
   }
 }
 

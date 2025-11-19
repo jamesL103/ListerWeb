@@ -30,13 +30,13 @@ export default async function ProfileView() {
 
 function LoginButton({text} : {text: string}) {
   return (
-    <Link href="/login" className="bg-cyan-600 m-4 px-3 py-3 hover:bg-cyan-700 active:bg-cyan-800 rounded-sm">{text}</Link>
+    <Link href="/login" className="m-4 px-3 py-3 hover:text-text-hover active:bg-cyan-800 rounded-sm">{text}</Link>
   )
 }
 
 function SignupButton({text} : {text: string}) {
   return (
-    <Link href="/register" className="bg-cyan-600 m-4 px-3 py-3 hover:bg-cyan-700 active:bg-cyan-800 rounded-sm">{text}</Link>
+    <Link href="/register" className="bg-mint m-4 px-3 py-3 hover:text-text-hover active:bg-accent rounded-sm">{text}</Link>
   )
 }
 

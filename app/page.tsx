@@ -1,4 +1,5 @@
 import GenIdDisplay from '../components/generate_id_display';
+import Link from "next/link"
 
 export default function Home() {
   
@@ -13,6 +14,14 @@ export default function Home() {
     </div>*/
 
     <div>
+        <div className='width-full border text-center p-10 bg-linear-to-b from-berry to-background'>
+          <h1 className='text-7xl'>Lister</h1>
+          <p className='text-xl m-20'>A task tracking application</p>
+          <div className='m-10 p-auto'>
+            <Link href='/' className='bg-grape p-3 rounded-full m-3'>Get Started</Link>
+            <Link href='/' className='bg-accent p-3 rounded-full m-3'>Learn More</Link>
+          </div>
+        </div>
         <GenIdDisplay/>
     </div>  
   );

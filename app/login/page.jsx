@@ -24,7 +24,7 @@ export default function Login() {
                     <div className="text-red-500 text-xs">
                         {state == LOGIN_FAILED ? "Email or Password is incorrect" : ""}
                     </div>
-                    <button type="submit" className="rounded-lg bg-grape p-3 my-3">
+                    <button type="submit" className="rounded-lg bg-grape p-3 my-3 hover:text-text-hover active:bg-dark-grape">
                         {pending ? "Loading..." : "Login"}
                     </button>
                 </form>

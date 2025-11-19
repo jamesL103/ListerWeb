@@ -26,7 +26,7 @@ export default function GenIdDisplay() {
 
   return (
     <div>
-      <button type="button" onClick={genId} className="border-2 rounded-md bg-mint">Generate User ID</button>
+      <button type="button" onClick={genId} className="border-2 rounded-md bg-cyan-600">Generate User ID</button>
       <div>{id == -1 ? "failed to generate id" : id_msg + id}</div>
     </div>
   )

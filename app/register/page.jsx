@@ -20,7 +20,7 @@ export default function Register() {
                     <div className="text-red-500 text-xs">{state == status.PASSWORD_MATCH_ERROR ? "Passwords must match" : ""}</div>
                     <div className="text-xs">Password must be between 8-20 characters long</div>
                     <SecretField fieldName="Confirm Password" id="confirmPw" name="confirmPassword" outline={state == status.PASSWORD_MATCH_ERROR ? "red-500" : "none"}></SecretField>
-                    <button className="rounded-lg bg-grape p-3 my-3">Sign Up</button>
+                    <button className="rounded-lg bg-grape p-3 my-3 hover:text-text-hover active:bg-dark-grape">Sign Up</button>
                     {isPending ? "Loading..." : ""}
                 </form>
             </div>
